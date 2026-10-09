@@ -14,7 +14,6 @@ import {
   Phone,
   MapPin,
   Clock,
-  UserPlus,
   ChevronDown,
   Info,
   Users,
@@ -270,30 +269,18 @@ export function Header() {
               })}
             </nav>
 
-            {/* Action Buttons & Mobile Toggle */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Desktop CTA */}
-              <Link
-                href={`/${locale}/admission`}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-islamic hover:bg-brand-dark text-white text-xs sm:text-sm font-semibold shadow-sm hover:shadow transition-all duration-200 active:scale-95 border border-brand-islamic"
+            {/* Mobile controls & toggle button */}
+            <div className="lg:hidden flex items-center gap-1.5">
+              <LanguageSwitcher />
+              <ThemeToggle />
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card border border-gray-200 dark:border-darkTheme-border transition focus:outline-none focus:ring-2 focus:ring-brand-islamic"
+                aria-label="Open mobile menu"
               >
-                <UserPlus className="w-4 h-4 text-brand-lime" />
-                <span>{t.nav.applyNow}</span>
-              </Link>
-
-              {/* Mobile controls */}
-              <div className="lg:hidden flex items-center gap-1.5">
-                <LanguageSwitcher />
-                <ThemeToggle />
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(true)}
-                  className="p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card border border-gray-200 dark:border-darkTheme-border transition focus:outline-none focus:ring-2 focus:ring-brand-islamic"
-                  aria-label="Open mobile menu"
-                >
-                  <Menu className="w-5 h-5" />
-                </button>
-              </div>
+                <Menu className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
