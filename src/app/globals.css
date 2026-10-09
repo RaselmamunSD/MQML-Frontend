@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 150 20% 10%;
+    --brand-islamic: 144 88% 26%;
+    --brand-dark: 144 85% 18%;
+    --brand-lime: 69 68% 43%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 20% 10%;
+    --border: 144 20% 90%;
+  }
+
+  .dark {
+    --background: 144 24% 5%;
+    --foreground: 0 0% 98%;
+    --brand-islamic: 144 88% 35%;
+    --brand-dark: 144 85% 25%;
+    --brand-lime: 69 75% 50%;
+    --card: 144 20% 9%;
+    --card-foreground: 0 0% 98%;
+    --border: 144 20% 16%;
+  }
+
+  body {
+    @apply bg-white dark:bg-darkTheme-bg text-gray-900 dark:text-gray-100 transition-colors duration-200 antialiased selection:bg-brand-islamic selection:text-white;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Islamic Geometric Subtle Motif */
+.islamic-pattern {
+  background-image: radial-gradient(rgba(8, 122, 53, 0.08) 1.5px, transparent 1.5px),
+                    radial-gradient(rgba(8, 122, 53, 0.04) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.dark .islamic-pattern {
+  background-image: radial-gradient(rgba(168, 185, 35, 0.06) 1.5px, transparent 1.5px),
+                    radial-gradient(rgba(8, 122, 53, 0.05) 1.5px, transparent 1.5px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1f3d2b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #087A35;
+}
