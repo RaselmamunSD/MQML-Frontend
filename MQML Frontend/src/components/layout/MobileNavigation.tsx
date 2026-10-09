@@ -53,7 +53,6 @@ export function MobileNavigation({ isOpen, onClose }: MobileNavProps) {
 
   const otherNavLinks = [
     { href: `/${locale}/academic-programs`, label: t.nav.programs, icon: GraduationCap },
-    { href: `/${locale}/curriculum`, label: t.nav.curriculum, icon: BookOpen },
     { href: `/${locale}/notices`, label: t.nav.notices, icon: Bell },
     { href: `/${locale}/gallery`, label: t.nav.gallery, icon: GalleryIcon },
     { href: `/${locale}/admission`, label: t.nav.admission, icon: UserPlus },

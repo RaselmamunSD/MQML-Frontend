@@ -26,7 +26,7 @@ export function Footer() {
   const quickLinks = [
     { href: `/${locale}/about`, label: t.nav.about },
     { href: `/${locale}/academic-programs`, label: t.nav.programs },
-    { href: `/${locale}/curriculum`, label: t.nav.curriculum },
+    { href: `/${locale}/academic-programs#curriculum-structure`, label: t.nav.curriculum },
     { href: `/${locale}/teachers`, label: t.nav.teachers },
     { href: `/${locale}/facilities`, label: t.nav.facilities },
     { href: `/${locale}/notices`, label: t.nav.notices },

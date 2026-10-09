@@ -86,7 +86,6 @@ export function Header() {
     { href: `/${locale}`, label: t.nav.home },
     // About is rendered as dropdown
     { href: `/${locale}/academic-programs`, label: t.nav.programs },
-    { href: `/${locale}/curriculum`, label: t.nav.curriculum },
     { href: `/${locale}/notices`, label: t.nav.notices },
     { href: `/${locale}/gallery`, label: t.nav.gallery },
     { href: `/${locale}/admission`, label: t.nav.admission },
