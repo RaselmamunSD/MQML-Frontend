@@ -18,19 +18,6 @@ import {
   Calendar,
 } from 'lucide-react';
 
-export async function generateStaticParams() {
-  const params: Array<{ locale: string; id: string }> = [];
-  const locales = ['bn', 'en'];
-
-  for (const locale of locales) {
-    for (const teacher of teachersData) {
-      params.push({ locale, id: teacher.id });
-    }
-  }
-
-  return params;
-}
-
 export async function generateMetadata({
   params,
 }: {

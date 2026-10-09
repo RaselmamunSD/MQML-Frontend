@@ -11,19 +11,6 @@ import { PageContainer } from '@/components/common/PageContainer';
 import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { Calendar, Clock, MapPin, Tag, ArrowLeft } from 'lucide-react';
 
-export async function generateStaticParams() {
-  const params: Array<{ locale: string; id: string }> = [];
-  const locales = ['bn', 'en'];
-
-  for (const locale of locales) {
-    for (const event of eventsData) {
-      params.push({ locale, id: event.id });
-    }
-  }
-
-  return params;
-}
-
 export async function generateMetadata({
   params,
 }: {

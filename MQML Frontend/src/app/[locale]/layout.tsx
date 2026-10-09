@@ -5,9 +5,6 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
-export async function generateStaticParams() {
-  return [{ locale: 'bn' }, { locale: 'en' }];
-}
 
 export default function LocaleLayout({
   children,

@@ -20,19 +20,6 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-export async function generateStaticParams() {
-  const params: Array<{ locale: string; slug: string }> = [];
-  const locales = ['bn', 'en'];
-
-  for (const locale of locales) {
-    for (const prog of academicProgramsData) {
-      params.push({ locale, slug: prog.slug });
-    }
-  }
-
-  return params;
-}
-
 export async function generateMetadata({
   params,
 }: {
