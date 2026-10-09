@@ -8,6 +8,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { MobileNavigation } from './MobileNavigation';
+import { NoticeTicker } from './NoticeTicker';
 import {
   Menu,
   Phone,
@@ -186,6 +187,9 @@ export function Header() {
             })}
           </div>
         </div>
+
+        {/* Continuous Scrolling Notice Bar Under Navbar */}
+        <NoticeTicker />
       </header>
 
       {/* Mobile Drawer */}
