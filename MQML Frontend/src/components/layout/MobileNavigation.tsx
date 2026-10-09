@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -21,6 +21,7 @@ import {
   UserPlus,
   Phone,
   HelpCircle,
+  ChevronDown,
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -31,18 +32,29 @@ interface MobileNavProps {
 export function MobileNavigation({ isOpen, onClose }: MobileNavProps) {
   const { locale, t } = useLanguage();
   const pathname = usePathname();
+  const [isAboutExpanded, setIsAboutExpanded] = useState(true);
 
   if (!isOpen) return null;
 
-  const navLinks = [
-    { href: `/${locale}`, label: t.nav.home, icon: Home },
-    { href: `/${locale}/about`, label: t.nav.about, icon: Info },
+  const isBn = locale === 'bn';
+
+  const isAboutActive =
+    pathname.startsWith(`/${locale}/about`) ||
+    pathname.startsWith(`/${locale}/teachers`) ||
+    pathname.startsWith(`/${locale}/events`) ||
+    pathname.startsWith(`/${locale}/facilities`);
+
+  const aboutSubLinks = [
+    { href: `/${locale}/about`, label: isBn ? 'আমাদের পরিচিতি' : 'About Madrasa', icon: Info },
+    { href: `/${locale}/teachers`, label: t.nav.teachers, icon: Users },
+    { href: `/${locale}/events`, label: t.nav.events, icon: Calendar },
+    { href: `/${locale}/facilities`, label: t.nav.facilities, icon: Building },
+  ];
+
+  const otherNavLinks = [
     { href: `/${locale}/academic-programs`, label: t.nav.programs, icon: GraduationCap },
     { href: `/${locale}/curriculum`, label: t.nav.curriculum, icon: BookOpen },
-    { href: `/${locale}/teachers`, label: t.nav.teachers, icon: Users },
-    { href: `/${locale}/facilities`, label: t.nav.facilities, icon: Building },
     { href: `/${locale}/notices`, label: t.nav.notices, icon: Bell },
-    { href: `/${locale}/events`, label: t.nav.events, icon: Calendar },
     { href: `/${locale}/gallery`, label: t.nav.gallery, icon: GalleryIcon },
     { href: `/${locale}/admission`, label: t.nav.admission, icon: UserPlus },
     { href: `/${locale}/contact`, label: t.nav.contact, icon: Phone },
@@ -104,7 +116,70 @@ export function MobileNavigation({ isOpen, onClose }: MobileNavProps) {
 
         {/* Navigation list */}
         <div className="flex-1 overflow-y-auto py-2 px-3 space-y-1">
-          {navLinks.map((item) => {
+          {/* Home Link */}
+          <Link
+            href={`/${locale}`}
+            onClick={onClose}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              isActive(`/${locale}`)
+                ? 'bg-brand-islamic text-white shadow-sm'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card'
+            }`}
+          >
+            <Home className={`w-4 h-4 ${isActive(`/${locale}`) ? 'text-white' : 'text-brand-islamic dark:text-brand-lime'}`} />
+            <span>{t.nav.home}</span>
+          </Link>
+
+          {/* About Us Accordion Group */}
+          <div className="rounded-lg overflow-hidden border border-gray-100 dark:border-darkTheme-border/60">
+            <button
+              type="button"
+              onClick={() => setIsAboutExpanded(!isAboutExpanded)}
+              className={`w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium transition-colors ${
+                isAboutActive
+                  ? 'bg-brand-islamic/10 text-brand-islamic dark:text-brand-lime'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Info className="w-4 h-4 text-brand-islamic dark:text-brand-lime" />
+                <span>{t.nav.about}</span>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                  isAboutExpanded ? 'rotate-180 text-brand-islamic dark:text-brand-lime' : ''
+                }`}
+              />
+            </button>
+
+            {/* Sub-items */}
+            {isAboutExpanded && (
+              <div className="bg-gray-50/70 dark:bg-darkTheme-card/50 py-1 pl-4 pr-2 space-y-1 border-t border-gray-100 dark:border-darkTheme-border/40">
+                {aboutSubLinks.map((sub) => {
+                  const SubIcon = sub.icon;
+                  const active = isActive(sub.href);
+                  return (
+                    <Link
+                      key={sub.href}
+                      href={sub.href}
+                      onClick={onClose}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                        active
+                          ? 'bg-brand-islamic text-white shadow-xs'
+                          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-darkTheme-cardHover'
+                      }`}
+                    >
+                      <SubIcon className={`w-3.5 h-3.5 ${active ? 'text-white' : 'text-brand-islamic dark:text-brand-lime'}`} />
+                      <span>{sub.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Other Navigation Links */}
+          {otherNavLinks.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
             return (

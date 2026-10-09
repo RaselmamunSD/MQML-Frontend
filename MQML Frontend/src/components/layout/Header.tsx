@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -15,6 +15,11 @@ import {
   MapPin,
   Clock,
   UserPlus,
+  ChevronDown,
+  Info,
+  Users,
+  Calendar,
+  Building,
 } from 'lucide-react';
 
 export function Header() {
@@ -22,6 +27,10 @@ export function Header() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isBn = locale === 'bn';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,15 +40,55 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsAboutDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setIsAboutDropdownOpen(false);
+  }, [pathname]);
+
+  const aboutDropdownItems = [
+    {
+      href: `/${locale}/about`,
+      label: isBn ? 'আমাদের পরিচিতি' : 'About Madrasa',
+      icon: Info,
+      desc: isBn ? 'ইতিহাস, লক্ষ্য ও দর্শন' : 'History & Mission',
+    },
+    {
+      href: `/${locale}/teachers`,
+      label: t.nav.teachers,
+      icon: Users,
+      desc: isBn ? 'যোগ্য ও অভিজ্ঞ শিক্ষকবৃন্দ' : 'Dedicated Faculty',
+    },
+    {
+      href: `/${locale}/events`,
+      label: t.nav.events,
+      icon: Calendar,
+      desc: isBn ? 'কিরাত ও বার্ষিক কার্যক্রম' : 'Activities & Programs',
+    },
+    {
+      href: `/${locale}/facilities`,
+      label: t.nav.facilities,
+      icon: Building,
+      desc: isBn ? 'ক্যাম্পাস ও পরিবেশ' : 'Campus Infrastructure',
+    },
+  ];
+
+  const mainNavLinks = [
     { href: `/${locale}`, label: t.nav.home },
-    { href: `/${locale}/about`, label: t.nav.about },
+    // About is rendered as dropdown
     { href: `/${locale}/academic-programs`, label: t.nav.programs },
     { href: `/${locale}/curriculum`, label: t.nav.curriculum },
-    { href: `/${locale}/teachers`, label: t.nav.teachers },
-    { href: `/${locale}/facilities`, label: t.nav.facilities },
     { href: `/${locale}/notices`, label: t.nav.notices },
-    { href: `/${locale}/events`, label: t.nav.events },
     { href: `/${locale}/gallery`, label: t.nav.gallery },
     { href: `/${locale}/admission`, label: t.nav.admission },
     { href: `/${locale}/contact`, label: t.nav.contact },
@@ -51,6 +100,12 @@ export function Header() {
     if (href !== `/${locale}` && pathname.startsWith(href)) return true;
     return false;
   };
+
+  const isAboutActive =
+    pathname.startsWith(`/${locale}/about`) ||
+    pathname.startsWith(`/${locale}/teachers`) ||
+    pathname.startsWith(`/${locale}/events`) ||
+    pathname.startsWith(`/${locale}/facilities`);
 
   return (
     <>
@@ -121,8 +176,83 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden xl:flex items-center gap-1">
-              {navLinks.map((link) => {
+            <nav className="hidden lg:flex items-center gap-1">
+              {/* Home */}
+              <Link
+                href={`/${locale}`}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+                  isActive(`/${locale}`)
+                    ? 'text-brand-islamic dark:text-brand-lime bg-brand-islamic/10 dark:bg-brand-lime/10 font-bold'
+                    : 'text-gray-700 dark:text-gray-200 hover:text-brand-islamic dark:hover:text-brand-lime hover:bg-gray-100 dark:hover:bg-darkTheme-card'
+                }`}
+              >
+                {t.nav.home}
+              </Link>
+
+              {/* About Us Dropdown Menu */}
+              <div
+                className="relative"
+                ref={dropdownRef}
+                onMouseEnter={() => setIsAboutDropdownOpen(true)}
+                onMouseLeave={() => setIsAboutDropdownOpen(false)}
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
+                  aria-expanded={isAboutDropdownOpen}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 focus:outline-none ${
+                    isAboutActive
+                      ? 'text-brand-islamic dark:text-brand-lime bg-brand-islamic/10 dark:bg-brand-lime/10 font-bold'
+                      : 'text-gray-700 dark:text-gray-200 hover:text-brand-islamic dark:hover:text-brand-lime hover:bg-gray-100 dark:hover:bg-darkTheme-card'
+                  }`}
+                >
+                  <span>{t.nav.about}</span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                      isAboutDropdownOpen ? 'rotate-180 text-brand-islamic dark:text-brand-lime' : ''
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Popover */}
+                {isAboutDropdownOpen && (
+                  <div className="absolute left-0 top-full pt-1.5 w-60 z-50 animate-fade-in">
+                    <div className="rounded-2xl bg-white dark:bg-darkTheme-surface p-2 shadow-2xl border border-gray-200/90 dark:border-darkTheme-border space-y-1">
+                      {aboutDropdownItems.map((item) => {
+                        const Icon = item.icon;
+                        const active = isActive(item.href);
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsAboutDropdownOpen(false)}
+                            className={`flex items-start gap-3 p-2.5 rounded-xl transition-colors ${
+                              active
+                                ? 'bg-brand-islamic/10 dark:bg-brand-lime/10 text-brand-islamic dark:text-brand-lime'
+                                : 'hover:bg-gray-50 dark:hover:bg-darkTheme-card text-gray-800 dark:text-gray-200'
+                            }`}
+                          >
+                            <div className="p-1.5 rounded-lg bg-brand-islamic/10 dark:bg-brand-lime/10 text-brand-islamic dark:text-brand-lime flex-shrink-0 mt-0.5">
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="text-xs font-bold leading-snug">
+                                {item.label}
+                              </div>
+                              <div className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">
+                                {item.desc}
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Other Main Links */}
+              {mainNavLinks.slice(1).map((link) => {
                 const active = isActive(link.href);
                 return (
                   <Link
@@ -165,26 +295,6 @@ export function Header() {
                 </button>
               </div>
             </div>
-          </div>
-
-          {/* Secondary Subnav bar for Tablet/Medium Screens (Between lg and xl) */}
-          <div className="hidden lg:flex xl:hidden border-t border-gray-100 dark:border-darkTheme-border px-4 py-1.5 max-w-7xl mx-auto overflow-x-auto justify-center gap-1">
-            {navLinks.map((link) => {
-              const active = isActive(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-2 py-1 rounded text-xs whitespace-nowrap font-medium transition ${
-                    active
-                      ? 'text-brand-islamic dark:text-brand-lime bg-brand-islamic/10 dark:bg-brand-lime/10 font-bold'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-brand-islamic'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
           </div>
         </div>
 
