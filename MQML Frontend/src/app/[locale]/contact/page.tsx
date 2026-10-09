@@ -14,6 +14,8 @@ import {
   Clock,
   MessageSquare,
   Sparkles,
+  ExternalLink,
+  Navigation,
 } from 'lucide-react';
 
 export async function generateMetadata({
@@ -123,27 +125,57 @@ export default function ContactPage({
               </div>
             </div>
 
-            {/* Location Map Preview */}
+            {/* Location Live Map */}
             <div className="p-6 rounded-3xl bg-white dark:bg-darkTheme-surface border border-gray-200/80 dark:border-darkTheme-border shadow-xs">
-              <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-brand-islamic dark:text-brand-lime" />
-                <span>{isBn ? 'গুগল ম্যাপে আমাদের অবস্থান' : 'Campus Location on Map'}</span>
-              </h4>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                {institutionData.address.full[locale]}
-              </p>
-              <div className="rounded-2xl overflow-hidden border border-gray-200 dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-card h-48 flex items-center justify-center text-center p-4">
-                <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-full bg-brand-islamic/20 text-brand-islamic dark:text-brand-lime flex items-center justify-center mx-auto">
-                    <MapPin className="w-6 h-6 animate-bounce" />
-                  </div>
-                  <div className="text-xs font-bold text-gray-900 dark:text-white">
-                    {institutionData.name[locale]}
-                  </div>
-                  <div className="text-[11px] text-gray-500 dark:text-gray-400">
-                    {institutionData.address.village[locale]}, {institutionData.address.upazila[locale]}, {institutionData.address.district[locale]}
-                  </div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                <div>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-brand-islamic dark:text-brand-lime" />
+                    <span>{isBn ? 'গুগল ম্যাপে আমাদের অবস্থান (Live Map)' : 'Campus Location (Live Map)'}</span>
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    {institutionData.address.full[locale]}
+                  </p>
                 </div>
+
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Khatapara,+Saptibari,+Aditmari,+Lalmonirhat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-islamic/10 text-brand-islamic dark:bg-brand-lime/10 dark:text-brand-lime hover:bg-brand-islamic hover:text-white dark:hover:bg-brand-lime dark:hover:text-brand-dark text-xs font-semibold transition flex-shrink-0"
+                >
+                  <span>{isBn ? 'বড় ম্যাপে দেখুন' : 'Open in Maps'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Live Google Map iframe */}
+              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-200 dark:border-darkTheme-border shadow-inner bg-gray-100 dark:bg-darkTheme-card">
+                <iframe
+                  src="https://maps.google.com/maps?q=Khatapara%2C%20Saptibari%2C%20Aditmari%2C%20Lalmonirhat&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                  title={isBn ? 'মারকাযুল কুরআন নূরানী একাডেমি গুগল ম্যাপ' : 'Markazul Quran Noorani Academy Live Google Map'}
+                />
+              </div>
+
+              {/* Get Directions Link */}
+              <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-darkTheme-border">
+                <span>{isBn ? 'ঠিকানা: খাতাপাড়া, আদিতমারী, লালমনিরহাট' : 'Khatapara, Aditmari, Lalmonirhat'}</span>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Khatapara,+Saptibari,+Aditmari,+Lalmonirhat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-brand-islamic dark:text-brand-lime hover:underline"
+                >
+                  <Navigation className="w-3 h-3" />
+                  <span>{isBn ? 'দিকনির্দেশনা পান' : 'Get Directions'}</span>
+                </a>
               </div>
             </div>
           </div>
