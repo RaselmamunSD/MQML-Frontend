@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/images') ||
     pathname.includes('.')
   ) {
-    return;
+    return NextResponse.next();
   }
 
   // Redirect root to default Bengali locale
@@ -25,6 +25,8 @@ export function middleware(request: NextRequest) {
   if (!pathnameHasLocale) {
     return NextResponse.redirect(new URL(`/bn${pathname}`, request.url));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
