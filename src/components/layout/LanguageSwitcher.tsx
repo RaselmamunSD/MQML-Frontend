@@ -2,39 +2,42 @@
 
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Globe } from 'lucide-react';
 
 export function LanguageSwitcher() {
   const { locale, switchLocale } = useLanguage();
 
   return (
-    <div className="inline-flex items-center rounded-full bg-gray-100 dark:bg-darkTheme-card p-1 border border-gray-200 dark:border-darkTheme-border text-xs font-medium">
-      <div className="pl-1.5 pr-1 text-gray-500 dark:text-gray-400">
-        <Globe className="w-3.5 h-3.5" />
-      </div>
+    <div
+      className="inline-flex items-center p-0.5 rounded-full bg-white dark:bg-darkTheme-surface border border-gray-200/90 dark:border-white/20 shadow-xs select-none"
+      role="group"
+      aria-label="Language selection"
+    >
       <button
         type="button"
         onClick={() => switchLocale('bn')}
-        className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+        className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-200 focus:outline-none ${
           locale === 'bn'
-            ? 'bg-brand-islamic text-white font-semibold shadow-sm'
-            : 'text-gray-600 dark:text-gray-300 hover:text-brand-islamic'
+            ? 'bg-[#98d5ba] text-[#0f3822] shadow-xs'
+            : 'bg-transparent text-gray-700 dark:text-gray-200 hover:text-brand-islamic dark:hover:text-brand-lime'
         }`}
         aria-pressed={locale === 'bn'}
+        title="বাংলা ভাষা নির্বাচন করুন"
       >
-        বাংলা
+        বাং
       </button>
+
       <button
         type="button"
         onClick={() => switchLocale('en')}
-        className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+        className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-200 focus:outline-none ${
           locale === 'en'
-            ? 'bg-brand-islamic text-white font-semibold shadow-sm'
-            : 'text-gray-600 dark:text-gray-300 hover:text-brand-islamic'
+            ? 'bg-[#98d5ba] text-[#0f3822] shadow-xs'
+            : 'bg-transparent text-gray-700 dark:text-gray-200 hover:text-brand-islamic dark:hover:text-brand-lime'
         }`}
         aria-pressed={locale === 'en'}
+        title="Select English"
       >
-        English
+        EN
       </button>
     </div>
   );

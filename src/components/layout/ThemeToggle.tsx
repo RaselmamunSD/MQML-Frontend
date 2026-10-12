@@ -12,26 +12,20 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <div className="w-9 h-9 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center opacity-50" />
-    );
-  }
-
-  const isDark = resolvedTheme === 'dark';
+  const isDark = mounted ? resolvedTheme === 'dark' : false;
 
   return (
     <button
       type="button"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="relative p-2 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-cardHover border border-gray-200 dark:border-darkTheme-border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-islamic"
+      className="relative w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white dark:bg-darkTheme-surface border border-gray-200/90 dark:border-white/20 shadow-xs flex items-center justify-center text-slate-800 dark:text-amber-400 hover:bg-gray-100 dark:hover:bg-darkTheme-cardHover transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-islamic flex-shrink-0"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={isDark ? 'লাইট মোড অন করুন' : 'ডার্ক মোড অন করুন'}
+      title={isDark ? 'লাইট মোড চালু করুন (Switch to Light Mode)' : 'ডার্ক মোড চালু করুন (Switch to Dark Mode)'}
     >
       {isDark ? (
-        <Sun className="w-4 h-4 text-brand-lime transition-transform rotate-0 hover:rotate-45" />
+        <Sun className="w-4 h-4 text-amber-400 fill-amber-400/20 transition-transform duration-300 hover:rotate-90" />
       ) : (
-        <Moon className="w-4 h-4 text-brand-dark transition-transform rotate-0 hover:-rotate-12" />
+        <Moon className="w-4 h-4 text-slate-800 fill-slate-800/15 transition-transform duration-300 hover:-rotate-12" />
       )}
     </button>
   );

@@ -133,9 +133,6 @@ export function Header() {
               <span className="text-brand-lime font-medium">
                 {t.institution.established}
               </span>
-              <div className="h-3 w-px bg-white/20" />
-              <LanguageSwitcher />
-              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -268,14 +265,14 @@ export function Header() {
               })}
             </nav>
 
-            {/* Mobile controls & toggle button */}
-            <div className="lg:hidden flex items-center gap-1.5">
+            {/* Right Controls (Language Switcher & Theme Toggle) */}
+            <div className="flex items-center gap-2 sm:gap-2.5">
               <LanguageSwitcher />
               <ThemeToggle />
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card border border-gray-200 dark:border-darkTheme-border transition focus:outline-none focus:ring-2 focus:ring-brand-islamic"
+                className="lg:hidden p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-darkTheme-card border border-gray-200 dark:border-darkTheme-border transition focus:outline-none focus:ring-2 focus:ring-brand-islamic"
                 aria-label="Open mobile menu"
               >
                 <Menu className="w-5 h-5" />
