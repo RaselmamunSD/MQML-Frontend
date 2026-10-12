@@ -29,7 +29,7 @@ export function LanguageProvider({
     if (initialLocale && initialLocale !== locale) {
       setLocale(initialLocale);
     }
-  }, [initialLocale]);
+  }, [initialLocale, locale]);
 
   const switchLocale = (newLocale: Locale) => {
     if (newLocale === locale) return;
