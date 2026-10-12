@@ -17,8 +17,14 @@ const sansFont = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? process.env.NEXT_PUBLIC_SITE_URL
+  : process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'https://mqml-frontend.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mqml-madrasa.edu.bd'),
+  metadataBase: new URL(siteUrl),
   title: {
     template: '%s | মারকাযুল কুরআন নূরানী একাডেমি',
     default: 'মারকাযুল কুরআন নূরানী একাডেমি | Al-Quran Nurani Academy',
@@ -37,15 +43,43 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Markazul Quran Noorani Academy' }],
   icons: {
-    icon: '/favicon.ico',
-    apple: '/images/logo.jpg',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/images/logo.jpg', type: 'image/jpeg' },
+    ],
+    apple: [
+      { url: '/images/logo.jpg', sizes: '180x180', type: 'image/jpeg' },
+    ],
+    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     title: 'মারকাযুল কুরআন নূরানী একাডেমি | Al-Quran Nurani Academy',
-    description: 'আরবি ও জেনারেল শিক্ষার সমন্বিত আদর্শ দ্বীনি শিক্ষা প্রতিষ্ঠান (প্লে থেকে ৫ম শ্রেণি)।',
-    images: ['/images/logo.jpg'],
+    description: 'আরবি ও জেনারেল শিক্ষার সমন্বিত আদর্শ দ্বীনি শিক্ষা প্রতিষ্ঠান (প্লে থেকে ৫ম শ্রেণি)। খাতাপাড়া, সাপ্টিবাড়ী, আদিতমারী, লালমনিরহাট। ফোন: 01734-108046',
+    url: siteUrl,
+    siteName: 'মারকাযুল কুরআন নূরানী একাডেমি',
+    images: [
+      {
+        url: '/images/logo.jpg',
+        width: 800,
+        height: 800,
+        alt: 'মারকাযুল কুরআন নূরানী একাডেমি লোগো',
+      },
+      {
+        url: '/images/banner.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'মারকাযুল কুরআন নূরানী একাডেমি ব্যানার',
+      },
+    ],
     locale: 'bn_BD',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'মারকাযুল কুরআন নূরানী একাডেমি | Al-Quran Nurani Academy',
+    description: 'আরবি ও জেনারেল শিক্ষার সমন্বিত আদর্শ দ্বীনি শিক্ষা প্রতিষ্ঠান (প্লে থেকে ৫ম শ্রেণি)।',
+    images: ['/images/logo.jpg'],
   },
 };
 
