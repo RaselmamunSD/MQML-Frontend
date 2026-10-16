@@ -19,8 +19,6 @@ const sansFont = Plus_Jakarta_Sans({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL
-  : process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
   : 'https://mqml-frontend.vercel.app';
 
 export const metadata: Metadata = {
@@ -61,22 +59,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/images/logo.jpg',
-        width: 800,
-        height: 800,
+        width: 960,
+        height: 960,
+        type: 'image/jpeg',
         alt: 'মারকাযুল কুরআন নূরানী একাডেমি লোগো',
-      },
-      {
-        url: '/images/banner.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'মারকাযুল কুরআন নূরানী একাডেমি ব্যানার',
       },
     ],
     locale: 'bn_BD',
     type: 'website',
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'মারকাযুল কুরআন নূরানী একাডেমি | Al-Quran Nurani Academy',
     description: 'আরবি ও জেনারেল শিক্ষার সমন্বিত আদর্শ দ্বীনি শিক্ষা প্রতিষ্ঠান (প্লে থেকে ৫ম শ্রেণি)।',
     images: ['/images/logo.jpg'],

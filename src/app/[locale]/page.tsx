@@ -28,23 +28,20 @@ export async function generateMetadata({
     openGraph: {
       title: `${t.institution.name} | ${t.institution.tagline}`,
       description: t.hero.description,
+      type: 'website',
+      siteName: t.institution.name,
       images: [
         {
           url: '/images/logo.jpg',
-          width: 800,
-          height: 800,
-          alt: t.institution.name,
-        },
-        {
-          url: '/images/banner.jpg',
-          width: 1200,
-          height: 630,
+          width: 960,
+          height: 960,
+          type: 'image/jpeg',
           alt: t.institution.name,
         },
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: 'summary',
       title: `${t.institution.name} | ${t.institution.tagline}`,
       description: t.hero.description,
       images: ['/images/logo.jpg'],
